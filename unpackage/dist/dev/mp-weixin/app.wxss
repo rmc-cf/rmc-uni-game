@@ -1,0 +1,15 @@
+
+	/*每个页面公共css */
+page, view, text, button, input, textarea,{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+page{
+	background: linear-gradient(135deg,#ffafbd 30%,#ffc3a0 70%);
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+page{--status-bar-height:25px;--top-window-height:0px;--window-top:0px;--window-bottom:0px;--window-left:0px;--window-right:0px;--window-magin:0px}[data-c-h="true"]{display: none !important;}

@@ -1,0 +1,12 @@
+page, view, text, button, input, textarea,{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+page{
+	background: linear-gradient(135deg,#ffafbd 30%,#ffc3a0 70%);
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
