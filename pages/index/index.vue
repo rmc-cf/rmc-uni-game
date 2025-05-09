@@ -19,7 +19,7 @@
 		<view class="play-area">
 			<template v-for="(row, rowIndex) in gridData" :key="rowIndex">
 				<view v-for="(cell, colIndex) in row" :key="rowIndex+ colIndex" class="grid-cell">
-					
+
 				</view>
 			</template>
 		</view>
@@ -47,13 +47,13 @@
 	});
 	const gridData = ref([])
 	// 初始化游戏网格
-	const initGame = () => {
+	const initGrid = () => {
 		const newGrid = [];
 		for (let row = 0; row < 4; row++) {
 			const rowData = [];
 			for (let col = 0; col < 4; col++) {
 				rowData.push({
-					
+
 				});
 			}
 			newGrid.push(rowData);
@@ -61,8 +61,16 @@
 		gridData.value = newGrid;
 
 	};
+	const initCard = (level = 1)=>{
+		 const layout = Array.from({ length: 4 }, () => Array(4).fill({ 
+		    hasCard: false,
+		    cardType: 0,
+		    matched: false
+		  }))
+	}
 	onMounted(() => {
-		initGame()
+		initGrid()
+		initCard()
 	})
 	const togglePlay = () => {
 		if (isPlaying.value) {
@@ -80,6 +88,14 @@
 		}
 		isPlaying.value = !isPlaying.value;
 	};
+	const isValid = (row,col,layout) =>{
+		return [
+			layout[row][col-1],
+			layout[row-1]?.[col-1],
+			layout[row-1]?.[col],
+			layout[row-1]?.[col+1],
+		].includes(1)
+	}
 </script>
 
 <style lang="scss" scoped>
@@ -181,6 +197,37 @@
 
 		to {
 			transform: rotate(360deg);
+		}
+	}
+
+	.tile {
+		width: 50rpx;
+		height: 50rpx;
+		background: linear-gradient(145deg, #fff, #fofof0f);
+		position: absolute;
+		border-radius: 16rpx;
+		box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, .2);
+		cursor: pointer;
+		transition: all 0.2s;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 48rpx;
+		color: #2c3e50;
+
+		.tile:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 10rpx 20rpx rgba(0, 0, 0, .3);
+
+			.tile::before {
+				content: '',
+					position: absolute;
+				top: 4rpx;
+				left: 4rpx;
+				right: 4rpx;
+				bottom: 4rpx: border: 4rpx solid rgba(255 255 255 .5);
+				border-radius: 12rpx;
+			}
 		}
 	}
 </style>
