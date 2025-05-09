@@ -11,37 +11,80 @@
 			</view>
 
 			<!-- 音乐按钮 -->
-			<view class="circle-button">
+			<view class="circle-button" :style="{ animationPlayState: isPlaying ? 'running' : 'paused' }"
+				@click="togglePlay">
 				<image src="/static/music.png" class="music-icon" mode="aspectFit"></image>
 			</view>
 		</view>
-		<view class="play-area">123123</view>
+		<view class="play-area">
+			<template v-for="(row, rowIndex) in gridData" :key="rowIndex">
+				<view v-for="(cell, colIndex) in row" :key="rowIndex+ colIndex" class="grid-cell">
+					
+				</view>
+			</template>
+		</view>
 		<view class="section-bar">
-			<slot />
-			<slot />
-			<slot />
-			<slot />
-			<slot />
+			<view class="slot" />
+			<view class="slot" />
+			<view class="slot" />
+			<view class="slot" />
+			<view class="slot" />
 		</view>
 
-		<!-- <audio
-			  id="bg-music"
-			 style="text-align: left" 
-			 :src="current.src" 
-			 :poster="current.poster" 
-			 :name="current.name" 
-			 :author="current.author" 
-			 :action="audioAction" 
-			  loop></audio> -->
+		<audio style="text-align: left" src="/static/music/99.mp3" :action="audioAction" loop></audio>
 	</view>
 </template>
 
 <script setup>
+	import {
+		onMounted,
+		ref
+	} from 'vue';
+	const isPlaying = ref(false)
+	const symbols = ['1', '2', '3']
+	const audioAction = ref({
+		method: 'pause' // 初始状态设为暂停
+	});
+	const gridData = ref([])
+	// 初始化游戏网格
+	const initGame = () => {
+		const newGrid = [];
+		for (let row = 0; row < 4; row++) {
+			const rowData = [];
+			for (let col = 0; col < 4; col++) {
+				rowData.push({
+					
+				});
+			}
+			newGrid.push(rowData);
+		}
+		gridData.value = newGrid;
+
+	};
+	onMounted(() => {
+		initGame()
+	})
+	const togglePlay = () => {
+		if (isPlaying.value) {
+			// 当前正在播放，切换到暂停
+			console.log('切换至暂停');
+			audioAction.value = {
+				method: 'pause'
+			};
+		} else {
+			// 当前暂停，切换到播放
+			console.log('切换至播放');
+			audioAction.value = {
+				method: 'play'
+			};
+		}
+		isPlaying.value = !isPlaying.value;
+	};
 </script>
 
 <style lang="scss" scoped>
 	.container {
-		width: 80%;
+		width: 90%;
 		margin: 0 auto;
 
 		.head {
@@ -78,7 +121,11 @@
 				align-items: center;
 				font-size: 48rpx;
 				box-shadow: 0 8rpx 12rpx rgba(0, 0, 0, .3);
+				transition: transform 0.3s ease-in-out;
+				animation: spin 3s linear infinite;
+				animation-play-state: paused;
 
+				/* 默认暂停 */
 				.music-icon {
 					height: 66rpx;
 					width: 66rpx;
@@ -89,19 +136,51 @@
 
 		.play-area {
 			width: 100%;
-			height: 100%;
+			aspect-ratio: 1/1;
 			margin: 40rpx 0;
+			box-sizing: border-box;
 			background: rgba(255, 255, 255, .1);
 		}
-		.grid-cell{
-			width: 50rpx;
-			height: 50rpx;
-			
+
+		.grid-cell {
+			width: 25%;
+			height: 25%;
+			border: 2rpx solid #eee;
+			float: left;
+			box-sizing: border-box;
 		}
-		.section-bar{
-			width: 80%;
-			height: 140rpx;
-			background: rgba(255,255,255,.2);
+
+		.section-bar {
+			width: 100%;
+			box-sizing: border-box;
+			background: rgba(255, 255, 255, .2);
+			border-radius: 20rpx;
+			margin: 60rpx 0;
+			padding: 20rpx;
+			display: flex;
+			justify-content: space-between;
+			gap: 20rpx;
+			backdrop-filter: blur(10rpx);
+			border: 4rpx dashed rgba(255, 255, 255, .5);
+
+			.slot {
+				width: 100rpx;
+				height: 100rpx;
+				background: rgba(255, 255, 255, .5);
+				border-radius: 16rpx;
+				box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, .2);
+			}
+		}
+	}
+
+	// 自定义动画
+	@keyframes spin {
+		from {
+			transform: rotate(0deg);
+		}
+
+		to {
+			transform: rotate(360deg);
 		}
 	}
 </style>

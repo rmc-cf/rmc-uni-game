@@ -24,7 +24,7 @@
 /* 透明度 */
 /* 文章场景相关 */
 .container.data-v-1cf27b2a {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
 }
 .container .head.data-v-1cf27b2a {
@@ -58,6 +58,10 @@
   align-items: center;
   font-size: 48rpx;
   box-shadow: 0 8rpx 12rpx rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out;
+  animation: spin-1cf27b2a 3s linear infinite;
+  animation-play-state: paused;
+  /* 默认暂停 */
 }
 .container .head .circle-button .music-icon.data-v-1cf27b2a {
   height: 66rpx;
@@ -65,16 +69,44 @@
 }
 .container .play-area.data-v-1cf27b2a {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1/1;
   margin: 40rpx 0;
+  box-sizing: border-box;
   background: rgba(255, 255, 255, 0.1);
 }
 .container .grid-cell.data-v-1cf27b2a {
-  width: 50rpx;
-  height: 50rpx;
+  width: 25%;
+  height: 25%;
+  border: 2rpx solid #eee;
+  float: left;
+  box-sizing: border-box;
 }
 .container .section-bar.data-v-1cf27b2a {
-  width: 80%;
-  height: 140rpx;
+  width: 100%;
+  box-sizing: border-box;
   background: rgba(255, 255, 255, 0.2);
+  border-radius: 20rpx;
+  margin: 60rpx 0;
+  padding: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
+  -webkit-backdrop-filter: blur(10rpx);
+          backdrop-filter: blur(10rpx);
+  border: 4rpx dashed rgba(255, 255, 255, 0.5);
+}
+.container .section-bar .slot.data-v-1cf27b2a {
+  width: 100rpx;
+  height: 100rpx;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 16rpx;
+  box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, 0.2);
+}
+@keyframes spin-1cf27b2a {
+from {
+    transform: rotate(0deg);
+}
+to {
+    transform: rotate(360deg);
+}
 }
